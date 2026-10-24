@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Football fixtures, scores, match previews and official free viewing options.">
+<title>GoalStream AI — Football Match Finder</title>
+<style>
+:root{--bg:#07111f;--panel:#101e30;--panel2:#15263b;--text:#f4f7fb;--muted:#a8b7ca;--accent:#45e08a;--line:#263950}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b1d30 0,#07111f 420px);color:var(--text)}
+header{padding:24px max(18px,calc((100% - 1100px)/2));border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{font-weight:850;font-size:1.4rem;letter-spacing:.2px}.brand span{color:var(--accent)}nav{display:flex;gap:14px;flex-wrap:wrap}nav a{color:var(--muted);text-decoration:none;font-size:.94rem}nav a:hover{color:var(--accent)}
+main{max-width:1100px;margin:auto;padding:28px 18px 60px}.hero{padding:30px 0 20px}.eyebrow{color:var(--accent);font-weight:750;text-transform:uppercase;font-size:.78rem;letter-spacing:1.4px}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.06;margin:10px 0 12px;max-width:760px}.hero p{color:var(--muted);max-width:720px;line-height:1.65}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}.toolbar input,.toolbar select{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:12px;min-width:150px}
+button,.button{background:var(--accent);color:#06140c;border:0;border-radius:10px;padding:12px 15px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:26px 0 14px}.sectionhead h2{margin:0;font-size:1.35rem}.muted{color:var(--muted);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.card{background:linear-gradient(150deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:17px;min-width:0}
+.cardtop{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.82rem}.badge{color:var(--accent);font-weight:800}.teams{font-size:1.08rem;font-weight:800;margin:18px 0 10px}.score{font-size:1.2rem;color:var(--accent)}.meta{color:var(--muted);font-size:.9rem;line-height:1.5;margin-bottom:14px}.card .button{font-size:.9rem;padding:10px 12px}.card .button.secondary{background:#233850;color:var(--text);margin-left:6px}
+.notice{border:1px solid #5b4b22;background:#2b2514;color:#f8e7b3;border-radius:12px;padding:13px 15px;line-height:1.5;margin-top:20px;font-size:.9rem}
+.two{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:28px}@media(max-width:720px){.two{grid-template-columns:1fr}}
+ul{padding-left:20px;color:var(--muted);line-height:1.8}.preview{line-height:1.65;color:var(--muted)}footer{border-top:1px solid var(--line);padding:22px 18px;color:var(--muted);text-align:center;font-size:.85rem}
+.smalllink{color:var(--accent);text-decoration:none} .empty{color:var(--muted);padding:20px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">⚽ GoalStream <span>AI</span></div>
+  <nav><a href="#matches">Matches</a><a href="#watch">Watch options</a><a href="#previews">AI previews</a><a href="#about">About</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow">Your football match finder</div>
+    <h1>Find the match. Follow the action.</h1>
+    <p>Fixtures, match information and links to authorized viewing options in one place. Times shown here are in West Africa Time (WAT) when entered manually.</p>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search team or competition…" aria-label="Search matches">
+      <select id="status" aria-label="Filter by match status"><option value="all">All matches</option><option value="upcoming">Upcoming</option><option value="live">Live</option><option value="finished">Finished</option></select>
+      <button id="reset" type="button">Reset filters</button>
+    </div>
+  </section>
+
+  <section id="matches">
+    <div class="sectionhead"><h2>Featured matches</h2><span class="muted" id="count">Demo listings</span></div>
+    <div class="grid" id="matchGrid"></div>
+    <div class="notice"><strong>Prototype notice:</strong> These are sample listings, not live fixture data. Replace them with verified schedules and official viewing links before publishing. Never label a match “Live” unless you have confirmed its current status.</div>
+  </section>
+
+  <section class="two">
+    <div class="card" id="watch">
+      <div class="eyebrow">Official viewing options</div>
+      <h2>Where to watch</h2>
+      <p class="preview">Viewing availability varies by match and country. Check the broadcaster's own schedule before sharing a link.</p>
+      <ul>
+        <li><a class="smalllink" href="https://www.plus.fifa.com/" target="_blank" rel="noopener noreferrer">FIFA+</a> — selected live matches and football content.</li>
+        <li><a class="smalllink" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Official YouTube channels</a> — some rights holders stream selected matches.</li>
+        <li>Add other official broadcasters only after confirming their Nigerian availability and link-sharing terms.</li>
+      </ul>
+    </div>
+    <div class="card" id="previews">
+      <div class="eyebrow">AI-assisted content</div>
+      <h2>Match preview template</h2>
+      <p class="preview" id="previewText">Choose a match card to load a preview prompt. Use verified team news, form and competition details; AI should not invent statistics, injuries, or kickoff times.</p>
+      <button id="copyPrompt" type="button">Copy AI prompt</button>
+    </div>
+  </section>
+
+  <section class="card" id="about" style="margin-top:14px">
+    <div class="eyebrow">About this project</div>
+    <h2>Built to help fans find matches</h2>
+    <p class="preview">GoalStream AI is an independent match-discovery prototype. It is not affiliated with FIFA, any league, club, or broadcaster. It does not host or rebroadcast match video. Only list streams you are authorized to link to or embed.</p>
+  </section>
+</main>
+<footer>© <span id="year"></span> GoalStream AI · Verify fixtures and viewing availability before publishing.</footer>
+<script>
+const matches = [
+ {home:"Arsenal",away:"Chelsea",competition:"Example Premier League listing",time:"Add verified kickoff (WAT)",status:"upcoming",score:"—",watchUrl:"https://www.premierleague.com/"},
+ {home:"Barcelona",away:"Real Madrid",competition:"Example La Liga listing",time:"Add verified kickoff (WAT)",status:"upcoming",score:"—",watchUrl:"https://www.laliga.com/"},
+ {home:"Nigeria",away:"Opponent TBC",competition:"Example international listing",time:"Add verified kickoff (WAT)",status:"upcoming",score:"—",watchUrl:"https://www.plus.fifa.com/"}
+];
+let selected = matches[0];
+const grid = document.getElementById("matchGrid");
+function render(){
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ const st=document.getElementById("status").value;
+ const filtered=matches.filter(m=>(st==="all"||m.status===st)&&[m.home,m.away,m.competition].join(" ").toLowerCase().includes(q));
+ document.getElementById("count").textContent=filtered.length+" demo listing(s)";
+ grid.innerHTML="";
+ if(!filtered.length){grid.innerHTML='<div class="empty">No matches match your filters.</div>';return;}
+ filtered.forEach((m)=>{
+  const i=matches.indexOf(m);
+  const label=m.status==="live"?"LIVE":m.status==="finished"?"FINISHED":"UPCOMING";
+  const card=document.createElement("article");card.className="card";
+  card.innerHTML=`<div class="cardtop"><span>${escapeHtml(m.competition)}</span><span class="badge">${label}</span></div><div class="teams">${escapeHtml(m.home)} <span class="score">${escapeHtml(m.score)}</span> ${escapeHtml(m.away)}</div><div class="meta">🕒 ${escapeHtml(m.time)}<br>Viewing link must be verified for your region.</div><button type="button" class="previewBtn" data-index="${i}">Create preview prompt</button> <a class="button secondary" href="${safeUrl(m.watchUrl)}" target="_blank" rel="noopener noreferrer">Official source</a>`;
+  grid.appendChild(card);
+ });
+ document.querySelectorAll(".previewBtn").forEach(b=>b.addEventListener("click",()=>{selected=matches[Number(b.dataset.index)];document.getElementById("previewText").textContent=`AI prompt for ${selected.home} vs ${selected.away}: Write a concise, neutral match preview for ${selected.competition}. Kickoff: ${selected.time}. Use only the verified facts I provide. Do not invent stats, injuries, predictions, or viewing availability. Clearly mark missing information.`;}));
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function safeUrl(s){try{const u=new URL(s);return ["https:","http:"].includes(u.protocol)?u.href:"#"}catch(e){return "#"}}
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("status").addEventListener("change",render);
+document.getElementById("reset").addEventListener("click",()=>{document.getElementById("search").value="";document.getElementById("status").value="all";render();});
+document.getElementById("copyPrompt").addEventListener("click",async()=>{const t=document.getElementById("previewText").textContent;try{await navigator.clipboard.writeText(t);document.getElementById("copyPrompt").textContent="Copied!";}catch(e){window.prompt("Copy this prompt:",t)}});
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
